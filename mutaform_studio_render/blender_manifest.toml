@@ -1,0 +1,22 @@
+schema_version = "1.0.0"
+
+id = "mutaform_studio_render"
+version = "1.5.10"
+name = "Mutaform Studio Render"
+tagline = "One-click non-destructive Marmoset-style studio render"
+maintainer = "Mutaform"
+type = "add-on"
+
+website = "https://mutaform.com"
+
+tags = ["Render", "Lighting"]
+
+blender_version_min = "5.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+# The addon writes rendered PNGs to a user-chosen folder.
+[permissions]
+files = "Save rendered images to the output folder"
