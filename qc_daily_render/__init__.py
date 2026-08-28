@@ -1,4 +1,4 @@
-"""Mutaform Studio Render - non-destructive, Marmoset-style studio render for Blender.
+"""QC Daily Render - non-destructive, Marmoset-style studio render for Blender.
 
 Three top actions in the sidebar (View3D > N > QC Render):
   * Setup Render Scene : snapshot the scene, then apply the studio setup (HDRI
@@ -24,7 +24,7 @@ import bpy
 from . import common, build, render, camera, state, operators, ui
 
 bl_info = {
-    "name": "Mutaform Studio Render",
+    "name": "QC Daily Render",
     "author": "Mutaform",
     "version": common.VERSION,
     "blender": (5, 2, 0),

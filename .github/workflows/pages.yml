@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "mutaform_studio_render/**"
+      - "qc_daily_render/**"
       - "tools/**"
       - ".github/workflows/pages.yml"
 
@@ -33,7 +33,7 @@ jobs:
       - name: Check ZIP contents
         shell: pwsh
         run: |
-          Expand-Archive -LiteralPath dist/mutaform_studio_render.zip -DestinationPath verify -Force
+          Expand-Archive -LiteralPath dist/qc_daily_render.zip -DestinationPath verify -Force
           if (-not (Test-Path -LiteralPath "verify/blender_manifest.toml")) {
             throw "Invalid extension ZIP: missing blender_manifest.toml"
           }
@@ -48,7 +48,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path pages | Out-Null
-          Copy-Item -LiteralPath dist/mutaform_studio_render.zip -Destination pages/mutaform_studio_render.zip -Force
+          Copy-Item -LiteralPath dist/qc_daily_render.zip -Destination pages/qc_daily_render.zip -Force
 
           $blender = Get-ChildItem -Path blender -Recurse -Filter blender.exe | Select-Object -First 1
           & $blender.FullName --command extension server-generate --repo-dir pages
@@ -58,12 +58,12 @@ jobs:
           <html>
             <head>
               <meta charset="utf-8">
-              <title>Mutaform Studio Render</title>
+              <title>QC Daily Render</title>
             </head>
             <body>
-              <h1>Mutaform Studio Render</h1>
+              <h1>QC Daily Render</h1>
               <p><a href="index.json">Blender Extension Repository Index</a></p>
-              <p><a href="mutaform_studio_render.zip">Download Blender Extension ZIP</a></p>
+              <p><a href="qc_daily_render.zip">Download Blender Extension ZIP</a></p>
             </body>
           </html>
           '@ | Set-Content -Path pages/index.html -Encoding UTF8

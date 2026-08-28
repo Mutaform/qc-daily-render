@@ -1,8 +1,8 @@
 schema_version = "1.0.0"
 
-id = "mutaform_studio_render"
-version = "1.5.10"
-name = "Mutaform Studio Render"
+id = "qc_daily_render"
+version = "1.6.0"
+name = "QC Daily Render"
 tagline = "One-click non-destructive Marmoset-style studio render"
 maintainer = "Mutaform"
 type = "add-on"

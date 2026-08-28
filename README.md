@@ -1,4 +1,4 @@
-# Mutaform Studio Render
+# QC Daily Render
 
 Недеструктивный студийный рендер в стиле Marmoset для Blender 5.2. Одна кнопка
 строит студийную сцену (HDRI-свет, единый материал, ловец контактной тени,
@@ -8,7 +8,7 @@
 ## Установка (Blender 5.2+)
 
 1. `Edit → Preferences → Get Extensions → ▼ → Install from Disk…`
-2. Выбрать `mutaform_studio_render_vX.Y.Z_extension.zip`.
+2. Выбрать `qc_daily_render_vX.Y.Z_extension.zip`.
 3. Панель появится: `View3D → N-панель → вкладка «QC Render»`.
 
 ## Как пользоваться

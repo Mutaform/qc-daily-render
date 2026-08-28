@@ -1,10 +1,22 @@
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$addonDir = Join-Path $repoRoot "mutaform_studio_render"
+$addonDir = Join-Path $repoRoot "qc_daily_render"
 $manifest = Join-Path $addonDir "blender_manifest.toml"
-$distDir = Join-Path $repoRoot "dist"
-$zipPath = Join-Path $distDir "mutaform_studio_render.zip"
+# Build output. On CI it has to be the repository root, because the workflow
+# publishes from the checkout. Locally it goes to the project's Dev folder
+# beside the repository, so the working copy holds only the files that are
+# actually in the repository.
+if ($env:GITHUB_ACTIONS -eq 'true') {
+    $outRoot = $repoRoot
+} else {
+    $outRoot = Join-Path (Split-Path -Parent $repoRoot) "Dev"
+    if (-not (Test-Path -LiteralPath $outRoot)) {
+        New-Item -ItemType Directory -Force -Path $outRoot | Out-Null
+    }
+}
+$distDir = Join-Path $outRoot "dist"
+$zipPath = Join-Path $distDir "qc_daily_render.zip"
 
 if (-not (Test-Path -LiteralPath $manifest)) {
     throw "Missing blender_manifest.toml in $addonDir"
