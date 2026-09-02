@@ -1,0 +1,30 @@
+{
+  "version": "v1",
+  "blocklist": [],
+  "data": [
+    {
+      "schema_version": "1.0.0",
+      "id": "qc_daily_render",
+      "name": "QC Daily Render",
+      "tagline": "One-click non-destructive Marmoset-style studio render",
+      "version": "1.6.2",
+      "type": "add-on",
+      "maintainer": "Mutaform",
+      "license": [
+        "SPDX:GPL-3.0-or-later"
+      ],
+      "blender_version_min": "5.1.2",
+      "website": "https://mutaform.com",
+      "permissions": {
+        "files": "Save rendered images to the output folder"
+      },
+      "tags": [
+        "Render",
+        "Lighting"
+      ],
+      "archive_url": "./qc_daily_render.zip",
+      "archive_size": 27532746,
+      "archive_hash": "sha256:8d16cd09cfad200f5766bfaad1d7928d9a657dd6f250949a94679bf8ef4d82b9"
+    }
+  ]
+}
