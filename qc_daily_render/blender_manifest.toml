@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "qc_daily_render"
-version = "1.6.0"
+version = "1.6.2"
 name = "QC Daily Render"
 tagline = "One-click non-destructive Marmoset-style studio render"
 maintainer = "Mutaform"
@@ -11,7 +11,7 @@ website = "https://mutaform.com"
 
 tags = ["Render", "Lighting"]
 
-blender_version_min = "5.2.0"
+blender_version_min = "5.1.2"
 
 license = [
   "SPDX:GPL-3.0-or-later",

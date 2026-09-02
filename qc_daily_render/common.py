@@ -33,7 +33,7 @@ EXR_PATH = os.path.join(ADDON_DIR, "assets", "white_containers_4k.exr")
 DEFAULT_ENV_STRENGTH = 2.8
 DEFAULT_ENV_YAW = math.radians(253.0)   # HDRI rotation
 
-VERSION = (1, 6, 0)
+VERSION = (1, 6, 2)
 VERSION_STR = "ver %d.%d.%d" % VERSION
 
 

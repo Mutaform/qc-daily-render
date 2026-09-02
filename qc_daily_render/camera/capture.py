@@ -67,12 +67,34 @@ def _finish_render(scene):
     C.tag_redraw()
 
 
+def _finish_timer():
+    """Runs the teardown from a timer (safe main-loop context) - see _defer_finish."""
+    scene = _render_ctx.pop("finish_scene", None) or bpy.context.scene
+    _finish_render(scene)
+    return None   # one-shot
+
+
+def _defer_finish(scene):
+    """Schedule the teardown instead of running it inline.
+
+    The render_complete / render_cancel handlers fire from INSIDE Blender's render
+    pipeline (BKE_callback_exec_id during RE_RenderFrame).  Removing a datablock
+    there - the temp camera - triggers id_delete -> collection cache free ->
+    depsgraph tag update against a half-torn-down depsgraph and crashes Blender
+    with EXCEPTION_ACCESS_VIOLATION (reproduced on a heavy scene by an artist).
+    A 0s timer defers the removal to the next main-loop tick, where deleting IDs
+    is safe."""
+    _render_ctx["finish_scene"] = scene
+    if not bpy.app.timers.is_registered(_finish_timer):
+        bpy.app.timers.register(_finish_timer, first_interval=0.0)
+
+
 def _on_render_complete(*args):
-    _finish_render(args[0] if args else bpy.context.scene)
+    _defer_finish(args[0] if args else bpy.context.scene)
 
 
 def _on_render_cancel(*args):
-    _finish_render(args[0] if args else bpy.context.scene)
+    _defer_finish(args[0] if args else bpy.context.scene)
 
 
 class MUTAFORM_OT_render(bpy.types.Operator):
