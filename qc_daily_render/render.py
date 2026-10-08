@@ -73,6 +73,14 @@ def _engine_update(self, context):
         C.tag_redraw()
 
 
+def _device_update(self, context):
+    scene = context.scene
+    if C.is_active(scene):
+        build.apply_perf(scene)     # GPU backend vs CPU
+        build.apply_quality(scene)  # cy.device follows the choice
+        C.tag_redraw()
+
+
 # --------------------------------------------------------------------------- #
 #  Output path (auto-numbered)
 # --------------------------------------------------------------------------- #
@@ -112,6 +120,14 @@ class MutaformRenderProps(bpy.types.PropertyGroup):
     render_y: IntProperty(name="Y", default=2160, min=16, max=16384,
                           description="Render height (also sets aspect ratio)",
                           update=_res_update)
+    render_device: EnumProperty(
+        name="Device", default='GPU', update=_device_update,
+        description="GPU is fastest.  Switch to CPU for scenes too large for the "
+                    "graphics card's memory - CPU renders from system RAM (slower, "
+                    "but avoids the 'out of GPU memory' crash on heavy scenes)",
+        items=[('GPU', "GPU", "Render on the graphics card (fast)"),
+               ('CPU', "CPU", "Render on the CPU using system RAM - use when the "
+                              "GPU runs out of memory on a heavy scene")])
     samples: IntProperty(name="Samples", default=128, min=1, soft_max=1024,
                          description="Cycles render samples", update=_samples_update)
     denoiser: EnumProperty(

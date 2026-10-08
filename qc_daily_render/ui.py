@@ -124,6 +124,10 @@ def _draw_render(layout, scene, r):
 
     box = layout.box()
     box.label(text="Quality", icon='SETTINGS')
+    row = box.row(align=True)
+    row.prop(r, "render_device", expand=True)
+    if r.render_device == 'CPU':
+        box.label(text="CPU: for scenes too big for GPU memory (slower)", icon='INFO')
     box.prop(r, "samples")
     box.prop(r, "denoiser")
     box.prop(r, "use_shadow_catcher")

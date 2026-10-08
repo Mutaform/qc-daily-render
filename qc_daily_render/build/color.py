@@ -51,8 +51,14 @@ def apply_perf(scene):
     best available backend, every GPU of that backend on, CPU off (hybrid
     CPU+GPU drags a fast GPU down), persistent data on (skips scene rebuild
     between renders).  Returns the chosen backend, or None = CPU-only box
-    (prefs left untouched there)."""
+    (prefs left untouched there).
+
+    When the artist picks the CPU device (for scenes too big for GPU memory),
+    the GPU prefs are left alone - cy.device = 'CPU' in apply_quality is what
+    actually routes the render to the CPU / system RAM."""
     scene.render.use_persistent_data = True
+    if scene.mutaform_render.render_device == 'CPU':
+        return 'CPU'
     try:
         cprefs = _cycles_prefs()
         gpus = {}
@@ -119,7 +125,8 @@ def apply_quality(scene):
     render noise in the preview."""
     cy = scene.cycles
     r = scene.mutaform_render
-    cy.device = 'GPU' if _has_gpu() else 'CPU'
+    # CPU when the artist asked for it (heavy scene) or there's no GPU at all
+    cy.device = 'CPU' if (r.render_device == 'CPU' or not _has_gpu()) else 'GPU'
     cy.samples = r.samples
     # adaptive sampling -> converge fast, stop early where clean
     _set(cy, "use_adaptive_sampling", True)

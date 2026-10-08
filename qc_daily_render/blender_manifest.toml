@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "qc_daily_render"
-version = "1.6.2"
+version = "1.6.3"
 name = "QC Daily Render"
 tagline = "One-click non-destructive Marmoset-style studio render"
 maintainer = "Mutaform"
