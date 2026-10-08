@@ -121,10 +121,10 @@ class MutaformRenderProps(bpy.types.PropertyGroup):
         description="Render engine for both the live preview and the saved render",
         items=[('CYCLES', "Cycles", "Ray-traced: ground shadow, best quality"),
                ('BLENDER_EEVEE', "EEVEE", "Fast real-time (no ground shadow)")])
-    render_x: IntProperty(name="X", default=3840, min=16, max=16384,
+    render_x: IntProperty(name="X", default=2560, min=16, max=16384,
                           description="Render width (also sets aspect ratio)",
                           update=_res_update)
-    render_y: IntProperty(name="Y", default=2160, min=16, max=16384,
+    render_y: IntProperty(name="Y", default=1440, min=16, max=16384,
                           description="Render height (also sets aspect ratio)",
                           update=_res_update)
     render_device: EnumProperty(
@@ -138,10 +138,10 @@ class MutaformRenderProps(bpy.types.PropertyGroup):
     samples: IntProperty(name="Samples", default=128, min=1, soft_max=1024,
                          description="Cycles render samples", update=_samples_update)
     texture_limit: EnumProperty(
-        name="Texture Limit", default='OFF', update=_quality_update,
-        description="Cap texture size in GPU memory.  Set to 2K if a heavy scene "
-                    "runs out of GPU memory - the render stays on the GPU at full "
-                    "resolution, textures are just loaded smaller (slightly softer)",
+        name="Texture Limit", default='2048', update=_quality_update,
+        description="Max texture size loaded into memory.  2K keeps GPU memory low "
+                    "on heavy scenes and avoids 'out of GPU memory' (textures just "
+                    "slightly softer); set Full for maximum sharpness",
         items=[('OFF', "Full", "No limit - full texture resolution"),
                ('4096', "4K", "Limit textures to 4096 px"),
                ('2048', "2K", "Limit textures to 2048 px (big GPU-memory saving)"),
