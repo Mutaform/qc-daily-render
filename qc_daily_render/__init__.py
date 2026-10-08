@@ -22,6 +22,13 @@ Module map:
 import bpy
 
 from . import common, build, render, camera, state, operators, ui
+from . import mutaform_update
+
+# Studio release folder on Yandex.Disk (the folder itself is published, so the
+# manifest lives at its root).  DO NOT re-publish the folder: a new share key
+# would orphan every installed copy from the channel.
+UPDATE_CHANNEL = "https://disk.360.yandex.ru/d/8Gxfn4Dd_prvgA"
+UPDATE_MANIFEST = "/version.json"
 
 bl_info = {
     "name": "QC Daily Render",
@@ -50,9 +57,19 @@ def register():
     bpy.types.Scene.mutaform_render = bpy.props.PointerProperty(type=render.MutaformRenderProps)
     bpy.types.Scene.mutaform_tab = bpy.props.EnumProperty(
         name="Tab", default='CAMERA', items=ui.TAB_ITEMS)
+    mutaform_update.setup(
+        addon_id="qc_daily_render",             # must match id in blender_manifest.toml
+        package=__package__,                    # bl_ext.<repo>.qc_daily_render
+        version="%d.%d.%d" % common.VERSION,
+        title="QC Daily Render",
+        public_key=UPDATE_CHANNEL,
+        manifest_path=UPDATE_MANIFEST,
+    )
+    mutaform_update.register()
 
 
 def unregister():
+    mutaform_update.unregister()
     camera.disable_overlay()
     del bpy.types.Scene.mutaform_tab
     del bpy.types.Scene.mutaform_render

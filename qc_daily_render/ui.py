@@ -8,6 +8,7 @@ import bpy
 
 from . import common as C
 from . import render as render_mod
+from . import mutaform_update
 
 CATEGORY = "QC Render"
 
@@ -153,6 +154,10 @@ class MUTAFORM_PT_main(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
+
+        # update banner: shows a red "update available" strip only when one is
+        # pending (silent otherwise), so it isn't lost if the popup was closed
+        mutaform_update.draw_banner(layout)
 
         # version, right-aligned and muted (a separator_spacer() in draw_header
         # instead corrupts the panel's body-width calc and shifts every row

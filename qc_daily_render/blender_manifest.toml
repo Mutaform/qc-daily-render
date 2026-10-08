@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "qc_daily_render"
-version = "1.6.5"
+version = "1.7.0"
 name = "QC Daily Render"
 tagline = "One-click non-destructive Marmoset-style studio render"
 maintainer = "Mutaform"
@@ -17,6 +17,8 @@ license = [
   "SPDX:GPL-3.0-or-later",
 ]
 
-# The addon writes rendered PNGs to a user-chosen folder.
+# The addon writes rendered PNGs to a user-chosen folder, and checks the studio
+# release folder on startup for a newer version.
 [permissions]
 files = "Save rendered images to the output folder"
+network = "Check the studio release folder for a newer version of the add-on"
