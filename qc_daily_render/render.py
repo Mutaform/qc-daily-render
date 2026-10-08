@@ -81,6 +81,13 @@ def _device_update(self, context):
         C.tag_redraw()
 
 
+def _quality_update(self, context):
+    scene = context.scene
+    if C.is_active(scene):
+        build.apply_quality(scene)
+        C.tag_redraw()
+
+
 # --------------------------------------------------------------------------- #
 #  Output path (auto-numbered)
 # --------------------------------------------------------------------------- #
@@ -130,6 +137,15 @@ class MutaformRenderProps(bpy.types.PropertyGroup):
                               "GPU runs out of memory on a heavy scene")])
     samples: IntProperty(name="Samples", default=128, min=1, soft_max=1024,
                          description="Cycles render samples", update=_samples_update)
+    texture_limit: EnumProperty(
+        name="Texture Limit", default='OFF', update=_quality_update,
+        description="Cap texture size in GPU memory.  Set to 2K if a heavy scene "
+                    "runs out of GPU memory - the render stays on the GPU at full "
+                    "resolution, textures are just loaded smaller (slightly softer)",
+        items=[('OFF', "Full", "No limit - full texture resolution"),
+               ('4096', "4K", "Limit textures to 4096 px"),
+               ('2048', "2K", "Limit textures to 2048 px (big GPU-memory saving)"),
+               ('1024', "1K", "Limit textures to 1024 px (maximum saving)")])
     denoiser: EnumProperty(
         name="Denoiser", default='OPTIX', update=_denoise_update,
         items=[('OPTIX', "OptiX", "NVIDIA OptiX AI denoiser (GPU)"),

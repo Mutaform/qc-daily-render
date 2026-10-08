@@ -19,6 +19,7 @@ CYCLES_ATTRS = (
     "preview_denoising_start_sample", "preview_denoising_prefilter",
     "use_adaptive_sampling", "adaptive_threshold",
     "use_preview_adaptive_sampling", "preview_adaptive_threshold", "max_bounces",
+    "texture_limit", "texture_limit_render", "use_auto_tile", "tile_size",
 )
 
 
@@ -128,6 +129,11 @@ def apply_quality(scene):
     # CPU when the artist asked for it (heavy scene) or there's no GPU at all
     cy.device = 'CPU' if (r.render_device == 'CPU' or not _has_gpu()) else 'GPU'
     cy.samples = r.samples
+    # GPU-memory controls: cap texture size (biggest VRAM saver on texture-heavy
+    # archviz scenes, keeps the render on the GPU) + auto-tile the frame buffer
+    _set(cy, "texture_limit", r.texture_limit)
+    _set(cy, "texture_limit_render", r.texture_limit)
+    _set(cy, "use_auto_tile", True)
     # adaptive sampling -> converge fast, stop early where clean
     _set(cy, "use_adaptive_sampling", True)
     _set(cy, "adaptive_threshold", 0.01)

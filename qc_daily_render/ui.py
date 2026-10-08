@@ -128,6 +128,10 @@ def _draw_render(layout, scene, r):
     row.prop(r, "render_device", expand=True)
     if r.render_device == 'CPU':
         box.label(text="CPU: for scenes too big for GPU memory (slower)", icon='INFO')
+    if r.render_device == 'GPU':
+        box.prop(r, "texture_limit")
+        if r.texture_limit != 'OFF':
+            box.label(text="Textures capped to save GPU memory", icon='INFO')
     box.prop(r, "samples")
     box.prop(r, "denoiser")
     box.prop(r, "use_shadow_catcher")
